@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+		<el-col :span="24" class="toolbar" style="padding: 20px;background:#fff;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item label="姓名">
 					<el-input v-model="filters.name" placeholder="姓名"></el-input>
@@ -23,7 +23,6 @@
 					<el-input v-model="filters.name" placeholder="姓名"></el-input>
 				</el-form-item>
 
-        
 				<el-form-item label="性别">
 					<el-select v-model="student" placeholder="请选择活动区域">
 						<el-option label="区域一" value="shanghai"></el-option>

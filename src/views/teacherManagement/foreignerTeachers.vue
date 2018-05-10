@@ -9,15 +9,13 @@
 				<el-form-item>
 					<div class="block">
     					<span class="demonstration">上线时间</span>
-    						  <el-date-picker
-                    v-model="value5"
-                    type="datetimerange"
-                    :picker-options="pickerOptions2"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    align="right">
-                  </el-date-picker> 
+    						<el-date-picker
+      							v-model="value6"
+      							type="datetimerange"
+      							start-placeholder="开始日期"
+      							end-placeholder="结束日期"
+      							:default-time="['12:00:00']">
+    						</el-date-picker> 
   					</div>
   				</el-form-item>
 
@@ -58,7 +56,7 @@
 			</el-table-column>
 			<el-table-column prop="addr" label="所属代理" width="180">
 			</el-table-column>
-			<el-table-column prop="onlineTime" label="上线日期" width="180">
+			<el-table-column prop="value6" label="上线日期" width="180">
 			</el-table-column>
 			<el-table-column label="操作" width="250">
 				<template scope="scope">
@@ -71,18 +69,8 @@
 
 		<!--工具条-->
 		<el-col class="toolbar">
-			 <!-- <el-pagination layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" :page-size="10" :total="total" style="float:right;"> 
-			</el-pagination> -->
-
-       <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="10"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
-    </el-pagination>
+			<el-pagination layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" :page-size="10" :total="total" style="float:right;"> 
+			</el-pagination>
 		</el-col> 
 
 		<!--编辑界面-->
@@ -97,8 +85,9 @@
 				</el-form-item>
 
 				<el-form-item label="email/QQ" prop="email">
-					<el-input v-model="editForm.email" ></el-input>
+					<el-input v-model="editForm.email"></el-input>
 				</el-form-item>
+        
 				<el-form-item label="工资" prop="salary">
 					<el-input v-model="editForm.salary" ></el-input>
 				</el-form-item>
@@ -110,15 +99,15 @@
 					</el-select>
 				</el-form-item>
 
-				<el-form-item label="上线时间" prop="onlineTime">
+				<el-form-item label="上线时间" prop="value6">
 					<div class="block">
     						<el-date-picker
-      							v-model="editForm.onlineTime"
+      							v-model="editForm.value6"
       							type="datetimerange"
       							start-placeholder="开始日期"
       							end-placeholder="结束日期"
       							:default-time="['12:00:00']">
-    						</el-date-picker>
+    						</el-date-picker> 
   					</div>
   				</el-form-item>
 			</el-form>
@@ -153,10 +142,10 @@
 					</el-select>
 				</el-form-item>
 
-				<el-form-item label="上线时间" prop="onlineTime">
+				<el-form-item label="上线时间" prop="value6">
 					<div class="block">
     						<el-date-picker
-      							v-model="addForm.onlineTime"
+      							v-model="addForm.value6"
       							type="datetimerange"
                     editable = 'false'
       							start-placeholder="开始日期"
@@ -177,8 +166,6 @@
 </template>
 
 <script>
-// import util from "../../common/js/util";
-// import NProgress from 'nprogress'
 import { getUserListPage, removeUser, editUser, addUser } from "../../api/api";
 
 export default {
@@ -193,10 +180,7 @@ export default {
       listLoading: false,
       //sels: [], //列表选中列
       value6: "",
-      onlineTime: "",
-      // region: "",
       addr: "",
-
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormRules: {
@@ -204,12 +188,12 @@ export default {
       },
       //编辑界面数据
       editForm: {
-        id: 0,
+        id: "",
         name: "",
         email: "",
-        salary: 0,
+        salary: "",
         addr: "",
-        onlineTime: ""
+        value6: ""
       },
       addFormVisible: false, //新增界面是否显示
       addLoading: false,
@@ -218,12 +202,12 @@ export default {
       },
       //新增界面数据
       addForm: {
-        id: 0,
+        id: "",
         name: "",
         email: "",
-        salary: 0,
+        salary: "",
         addr: "",
-        onlineTime: ""
+        value6: ""
       }
     };
   },
@@ -242,7 +226,6 @@ export default {
       };
       this.listLoading = true;
       getUserListPage(para).then(res => {
-        console.log(res);
         this.total = res.data.total;
         this.users = res.data.users;
         this.listLoading = false;
@@ -250,7 +233,7 @@ export default {
     },
     //删除
     soldOut: function(index, row) {
-      this.$confirm("确认删除该记录吗?", "提示", {
+      this.$confirm("确认下架该条记录吗?", "提示", {
         type: "warning"
       })
         .then(() => {
@@ -276,12 +259,12 @@ export default {
     handleAdd: function() {
       this.addFormVisible = true;
       this.addForm = {
-        id: 0,
+        id: "",
         name: "",
         email: "",
-        salary: 0,
+        salary: "",
         addr: "",
-        onlineTime: ""
+        value6: ""
       };
     },
     //编辑
@@ -321,7 +304,6 @@ export default {
                 ? ""
                 : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
             addUser(para).then(res => {
-              // this.addLoading = true;
               this.addLoading = false;
               this.$message({
                 message: "提交成功",
@@ -336,15 +318,14 @@ export default {
       });
     },
     //导出
-    handleExport: function() {},
+    handleExport: function() {
+
+    },
     //重置密码
     resetPasswords: function() {
       var $this = this;
       $this.$router.push("/accountManagement");
     }
-    // selsChange: function(sels) {
-    //   this.sels = sels;
-    // },
   },
   mounted() {
     this.getUsers();
@@ -353,5 +334,7 @@ export default {
 </script>
 
 <style scoped>
-
+.toolbar {
+  background: #fff;
+}
 </style>

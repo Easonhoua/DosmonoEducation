@@ -1,11 +1,10 @@
 <template>
 	<section>
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+		<el-col :span="24" class="toolbar" style="padding: 20px;background:#fff;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item label="用户">
 					<el-input v-model="filters.name" placeholder="姓名/魔脑号"></el-input>
 				</el-form-item>
-
         <el-form-item label="联系方式">
 					<el-input v-model="filters.name" placeholder="手机号"></el-input>
 				</el-form-item>
@@ -20,7 +19,7 @@
       							:default-time="['12:00:00']">
     						</el-date-picker>
   					</div>
-  				</el-form-item>
+  			</el-form-item>
 
 				<el-form-item label="绑定学生设备">
 					<el-select v-model="student" placeholder="请选择活动区域">
@@ -127,7 +126,6 @@ import util from "../../common/js/util";
 import {
   getUserListPage,
   removeUser,
-  batchRemoveUser,
   editUser,
   addUser
 } from "../../api/api";
@@ -144,9 +142,9 @@ export default {
       listLoading: false,
       sels: [], //列表选中列
       value6: "",
-	  student: "",
-	  region: "",
-	  agency:"",
+	    student: "",
+	    region: "",
+	    agency:"",
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormRules: {

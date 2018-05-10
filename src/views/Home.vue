@@ -76,6 +76,7 @@ export default {
   data() {
     return {
       sysName: "魔脑教育系统",
+      // sysImg: "<img src='../assets/defaultlogo.png'>",
       collapsed: false,
       sysUserName: "",
       sysUserAvatar: "",
@@ -101,7 +102,9 @@ export default {
     handleclose() {
 
     },
-    handleselect: function(a, b) {},
+    handleselect: function(a, b) {
+      
+    },
     //退出登录
     logout: function() {
       var _this = this;
@@ -147,7 +150,7 @@ export default {
     height: 60px;
     line-height: 60px;
     background: $color-primary;
-    color: #fff;
+    color: #fff;//#18c79c  #20a0ff
     .userinfo {
       text-align: right;
       padding-right: 35px;
@@ -198,7 +201,7 @@ export default {
   }
   .main {
     display: flex;
-    // background: #324057;
+    //background: #324057;
     position: absolute;
     top: 60px;
     bottom: 0px;
@@ -206,11 +209,9 @@ export default {
     aside {
       flex: 0 0 230px;
       width: 230px;
-      // position: absolute;
-      // top: 0px;
-      // bottom: 0px;
       .el-menu {
         height: 100%;
+        background-color: #fff;
       }
       .collapsed {
         width: 60px;
@@ -238,6 +239,7 @@ export default {
         width: 100% !important;
       }
       .el-submenu .el-menu-item {
+        background: #fff;
         min-width: 0px !important;
       }
     }

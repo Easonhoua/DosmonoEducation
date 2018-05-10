@@ -126,7 +126,6 @@
 
 <script>
 import util from "../../common/js/util";
-//import NProgress from 'nprogress'
 import {
   getUserListPage,
   removeUser,
@@ -196,12 +195,10 @@ export default {
         name: this.filters.name
       };
       this.listLoading = true;
-      //NProgress.start();
       getUserListPage(para).then(res => {
         this.total = res.data.total;
         this.users = res.data.users;
         this.listLoading = false;
-        //NProgress.done();
       });
     },
     //删除
@@ -211,11 +208,9 @@ export default {
       })
         .then(() => {
           this.listLoading = true;
-          //NProgress.start();
           let para = { id: row.id };
           removeUser(para).then(res => {
             this.listLoading = false;
-            //NProgress.done();
             this.$message({
               message: "删除成功",
               type: "success"
@@ -247,7 +242,6 @@ export default {
         if (valid) {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.editLoading = true;
-            //NProgress.start();
             let para = Object.assign({}, this.editForm);
             para.birth =
               !para.birth || para.birth == ""
@@ -255,7 +249,6 @@ export default {
                 : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
             editUser(para).then(res => {
               this.editLoading = false;
-              //NProgress.done();
               this.$message({
                 message: "提交成功",
                 type: "success"
@@ -274,7 +267,6 @@ export default {
         if (valid) {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.addLoading = true;
-            //NProgress.start();
             let para = Object.assign({}, this.addForm);
             para.birth =
               !para.birth || para.birth == ""
@@ -282,7 +274,6 @@ export default {
                 : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
             addUser(para).then(res => {
               this.addLoading = false;
-              //NProgress.done();
               this.$message({
                 message: "提交成功",
                 type: "success"
@@ -309,11 +300,9 @@ export default {
       })
         .then(() => {
           this.listLoading = true;
-          //NProgress.start();
           let para = { ids: ids };
           batchRemoveUser(para).then(res => {
             this.listLoading = false;
-            //NProgress.done();
             this.$message({
               message: "删除成功",
               type: "success"

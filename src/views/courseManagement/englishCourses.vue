@@ -50,11 +50,11 @@
 			</el-table-column>
 			<el-table-column prop="birth" label="课文" width="120">
 			</el-table-column>
-			<el-table-column prop="addr" label="单词" min-width="180">
+			<el-table-column prop="addr" label="单词" width="180">
 			</el-table-column>
-      <el-table-column prop="addr" label="语法" min-width="180">
+      <el-table-column prop="addr" label="语法" width="180">
 			</el-table-column>
-      <el-table-column prop="addr" label="句子" min-width="180">
+      <el-table-column prop="addr" label="句子" width="180">
 			</el-table-column>
       <el-table-column prop="addr" label="对话" min-width="180">
 			</el-table-column>
@@ -155,9 +155,9 @@ export default {
       listLoading: false,
       sels: [], //列表选中列
       value6: "",
-	  student: "",
-	  region: "",
-	  agency:"",
+	    student: "",
+	    region: "",
+	    agency:"",
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormRules: {
@@ -165,10 +165,10 @@ export default {
       },
       //编辑界面数据
       editForm: {
-        id: 0,
+        id: "",
         name: "",
-        sex: -1,
-        age: 0,
+        sex: "",
+        age: "",
         birth: "",
         addr: ""
       },
@@ -181,8 +181,8 @@ export default {
       //新增界面数据
       addForm: {
         name: "",
-        sex: -1,
-        age: 0,
+        sex: "",
+        age:"",
         birth: "",
         addr: ""
       }
@@ -204,26 +204,21 @@ export default {
         name: this.filters.name
       };
       this.listLoading = true;
-      //NProgress.start();
       getUserListPage(para).then(res => {
         this.total = res.data.total;
         this.users = res.data.users;
         this.listLoading = false;
-        //NProgress.done();
       });
     },
     //删除
     handleDel: function(index, row) {
       this.$confirm("确认删除该记录吗?", "提示", {
         type: "warning"
-      })
-        .then(() => {
+      }).then(() => {
           this.listLoading = true;
-          //NProgress.start();
           let para = { id: row.id };
           removeUser(para).then(res => {
             this.listLoading = false;
-            //NProgress.done();
             this.$message({
               message: "删除成功",
               type: "success"
@@ -243,8 +238,8 @@ export default {
       this.addFormVisible = true;
       this.addForm = {
         name: "",
-        sex: -1,
-        age: 0,
+        sex: "",
+        age: "",
         birth: "",
         addr: ""
       };
@@ -255,7 +250,6 @@ export default {
         if (valid) {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.editLoading = true;
-            //NProgress.start();
             let para = Object.assign({}, this.editForm);
             para.birth =
               !para.birth || para.birth == ""
@@ -263,7 +257,6 @@ export default {
                 : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
             editUser(para).then(res => {
               this.editLoading = false;
-              //NProgress.done();
               this.$message({
                 message: "提交成功",
                 type: "success"
@@ -282,7 +275,6 @@ export default {
         if (valid) {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.addLoading = true;
-            //NProgress.start();
             let para = Object.assign({}, this.addForm);
             para.birth =
               !para.birth || para.birth == ""
@@ -290,7 +282,6 @@ export default {
                 : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
             addUser(para).then(res => {
               this.addLoading = false;
-              //NProgress.done();
               this.$message({
                 message: "提交成功",
                 type: "success"
@@ -317,11 +308,9 @@ export default {
       })
         .then(() => {
           this.listLoading = true;
-          //NProgress.start();
           let para = { ids: ids };
           batchRemoveUser(para).then(res => {
             this.listLoading = false;
-            //NProgress.done();
             this.$message({
               message: "删除成功",
               type: "success"
